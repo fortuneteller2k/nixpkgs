@@ -1,24 +1,20 @@
-{ lib, stdenv, fetchFromGitHub, automake, autoconf, libtool, pkg-config
-, libusb1
-, readline
-}:
+{ lib, stdenv, fetchFromGitHub, autoreconfHook, libtool, pkg-config, libusb1, readline }:
 
 stdenv.mkDerivation rec {
   pname = "libirecovery";
-  version = "1.0.0";
+  version = "unstable-2021-05-26";
 
   src = fetchFromGitHub {
     owner = "libimobiledevice";
     repo = pname;
-    rev = version;
+    rev = "47934949e0015165a4562b08e824adb3f664c0ea";
     sha256 = "0p9ncqnz5kb7qisw00ynvasw1hax5qx241h9nwppi2g544i9lbnr";
   };
 
   outputs = [ "out" "dev" ];
 
   nativeBuildInputs = [
-    autoconf
-    automake
+    autoreconfHook
     libtool
     pkg-config
   ];
@@ -27,8 +23,6 @@ stdenv.mkDerivation rec {
     libusb1
     readline
   ];
-
-  preConfigure = "NOCONFIGURE=1 ./autogen.sh";
 
   # Packager note: Not clear whether this needs a NixOS configuration,
   # as only the `idevicerestore` binary was tested so far (which worked
