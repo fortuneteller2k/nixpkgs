@@ -18,6 +18,8 @@ buildLinux (args // rec {
   structuredExtraConfig = with lib.kernel; {
     PREEMPT = lib.mkForce yes;
     PREEMPT_VOLUNTARY = lib.mkForce no;
+    NO_HZ_FULL = yes;
+    HZ_500 = yes;
   };
 
   extraMeta = {
